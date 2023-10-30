@@ -47,7 +47,7 @@ const chat = createChat({
       },
     },
   ],
-  functionCall: "auto",
+  functionCall: "none",
 });
 
 // Define a route for handling the weather bot
