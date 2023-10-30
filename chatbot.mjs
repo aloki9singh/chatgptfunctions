@@ -47,7 +47,7 @@ const chat = createChat({
       },
     },
   ],
-  functionCall: "auto",
+  functionCall: "none",
 });
 
 // Define a route for handling the weather bot
@@ -55,7 +55,12 @@ weatherRouter.post("/weatherbot", async (req, res) => {
   const {userMessage }= req.body;
 
   try {
-    const response = await chat.sendMessage(userMessage);
+    const response = await chat.sendMessage(userMessage,{
+      //this function only runs
+      functionCall:{
+        name:"get_current_weather"
+      }
+    });
     console.log(response.content);
     const result = response.content;
     res.json({ result });
