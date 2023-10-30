@@ -14,7 +14,7 @@ const app = express();
 const weatherRouter = express.Router();
 
 // Weather API configuration
-var location = "Delhi";
+
 var Key = "1de760b18d6d92f69cb6972a0b7c288f";
 const chat = createChat({
   apiKey: process.env.OPENAI_API_KEY,
@@ -34,7 +34,7 @@ const chat = createChat({
         },
         required: ["location"],
       },
-      function: async ({ locations }) => {
+      function: async ({ location }) => {
         let res_single = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${Key}&units=metric&sys=unix`
         );
@@ -52,7 +52,8 @@ const chat = createChat({
 
 // Define a route for handling the weather bot
 weatherRouter.post("/weatherbot", async (req, res) => {
-  const { userMessage } = req.body;
+  const {userMessage }= req.body;
+
   try {
     const response = await chat.sendMessage(userMessage);
     console.log(response.content);
@@ -61,7 +62,7 @@ weatherRouter.post("/weatherbot", async (req, res) => {
   } catch (error) {
     const message =
       "It seems that the answer to this question isn't available. Could you please try rephrasing it?";
-    res.json({ message });
+    res.json({ message, error });
   }
 });
 

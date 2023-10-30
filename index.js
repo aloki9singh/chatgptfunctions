@@ -2,15 +2,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import weatherRouter from "./chatbot.mjs"; // Import the weatherRouter module
-
+import cors from "cors"
 // Initialize dotenv for environment variables
+const app = express()
+app.use(express.json())
 dotenv.config();
-
+app.use(cors());
 // Define the port
 const PORT = process.env.PORT || 3000;
 
-// Create an Express app
-const app = express();
 
 // Use the weatherRouter for handling routes
 app.use("/", weatherRouter);
